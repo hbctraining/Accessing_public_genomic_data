@@ -9,10 +9,11 @@ date: "April 26th, 2018"
 The Sequence Read Archive (SRA) is an archive for high throughput sequencing data, publically accessible, for the purpose of enhancing reproducibility in the scientific community.
 
 There are four hierarchical levels of SRA entities and their accessions:  
-1) **STUDY** with accessions in the form of SRP, ERP, or DRP  
-2) **SAMPLE** with accessions in the form of SRS, ERS, or DRS  
-3) **EXPERIMENT** with accessions in the form of SRX, ERX, or DRX  
-4) **RUN** with accessions in the form of SRR, ERR, or DRR
+
+1. **STUDY** with accessions in the form of SRP, ERP, or DRP  
+2. **SAMPLE** with accessions in the form of SRS, ERS, or DRS  
+3. **EXPERIMENT** with accessions in the form of SRX, ERX, or DRX  
+4. **RUN** with accessions in the form of SRR, ERR, or DRR
 
 The minimum publishable unit in the SRA, is an EXPERIMENT (SRX)
 
@@ -51,29 +52,31 @@ Also on this page is a listing of each run and the corresponding sample it came 
 **Copy the contents of this downloaded file to a new file on the cluster** using the following commands:
 
 ```bash
-$ mkdir -p ~/mov10_rnaseq_project/data/GSE51443    # make a new directory
+$ cd /n/scratch2/username/mov10_rnaseq_project/
 
-$ cd ~/mov10_rnaseq_project/data/GSE51443   # change to that directory
+$ mkdir -p data/GSE51443    # make a new directory/
+
+$ cd data/GSE51443   # change to that directory
 
 $ vim SRR_Acc_List_GSE51443.txt   # paste into this new file and save
 ```
 
 > **NOTE:** Instead of copying and pasting you can also use `scp` to copy over the downloaded file to the cluster.
-> 
-> **NOTE: Storage considerations:**
-> When downloading large datasets to the server, note that the maximum storage limit in your home directory is limited. This can be a problem when downloading tens or hundreds of fastq files. We are doing this demo run using our home directory, but this download should ideally be done in a location that has been assigned to your group (scratch space or regular storage space) and not in the home directory. *The scratch space is a location on most clusters with much greater storage available, with the caveat that it may not be backed up*.
->
-> During download, in addition to writing the fastq files, SRA-toolkit writes additional cache files, which are automatically directed to your home directory by default, even if you are working elsewhere. Because of this, we may need to write a **short configuration file** to tell SRA-toolkit to **write its cache files to the scratch space**, instead of our home, to avoid running out of storage.
->
-> ```bash
-> # navigate to your scratch space (replace 'username' with your username)
-> cd /n/regal/USERNAME
->
-> # make a directory for ncbi configuration settings
-> mkdir -p ~/.ncbi
-> # write configuration file with a line that redirects the cache
-> echo '/repository/user/main/public/root = "/n/regal/USERNAME/sra-cache"' > ~/.ncbi/user-settings.mkfg
 > ```
+> $ scp /path/on/your/computer/to/SRR_Acc_List_GSE51443.txt username@hms.harvard.edu:/n/scratch2/USERNAME/
+> ```
+During download, in addition to writing the fastq files, SRA-toolkit writes additional cache files, which are automatically directed to your home directory by default, even if you are working elsewhere. Because of this, we need to write a **short configuration file** to tell SRA-toolkit to **write its cache files to the scratch space**, instead of our home, to avoid running out of storage.
+
+```bash
+# navigate to your scratch space (replace 'username' with your username)
+cd /n/scratch2/username/
+
+# make a directory for ncbi configuration settings
+mkdir -p ~/.ncbi
+
+# write configuration file with a line that redirects the cache
+echo '/repository/user/main/public/root = "/n/scratch2/username/sra-cache"' > ~/.ncbi/user-settings.mkfg
+```
 
 Now we have what we need to run a `fastq-dump` for **all of the SRRs** we want.
 
@@ -82,7 +85,7 @@ Now we have what we need to run a `fastq-dump` for **all of the SRRs** we want.
 Given one single SRR, it is possible to convert that directly to a fastq file on the server, using [SRA toolkit](https://github.com/ncbi/sra-tools/wiki/HowTo:-Access-SRA-Data) which is a toolkit created by NCBI. This should be already downloaded and installed on most clusters used for biomedical purposes.
 
 ```bash
-$ module load sratoolkit/2.8.0-fasrc01 
+$ module load sratoolkit/2.9.0
 
 ## The fastq-dump command will only download the fastq version of the SRR, given the SRR number and an internet connection
 $ fastq-dump SRR1013512
@@ -101,15 +104,14 @@ $ vim inner_script.slurm
 ```bash
 #!/bin/bash
 #SBATCH -t 0-10:00       # Runtime - asking for 10 hours
-#SBATCH -p shared           # Partition (queue) - asking for shared queue
+#SBATCH -p short            # Partition (queue) - asking for short queue
 #SBATCH -J sra_download             # Job name
 #SBATCH -o run.o             # Standard out
 #SBATCH -e run.e             # Standard error
-#SBATCH --cpus-per-task=1    # CPUs per task
-#SBATCH --mem-per-cpu=8G     # Memory needed per core
-#SBATCH --mail-type=NONE      # Mail when the job ends
+#SBATCH -c     
+#SBATCH --mem 8G     # Memory needed per core
 
-module load sratoolkit/2.8.0-fasrc01 
+module load sratoolkit/2.9.0
 
 # for single end reads only
 fastq-dump $1
@@ -133,14 +135,15 @@ $ vim sra_fqdump.slurm
 
 ```bash
 #!/bin/bash
-#SBATCH -t 0-10:00       # Runtime
-#SBATCH -p short            # Partition (queue)
-#SBATCH -J your_job_name             # Job name
+#SBATCH -t 0-10:00       # Runtime - asking for 10 hours
+#SBATCH -p short            # Partition (queue) - asking for short queue
+#SBATCH -J sra_download             # Job name
 #SBATCH -o run.o             # Standard out
 #SBATCH -e run.e             # Standard error
-#SBATCH --cpus-per-task=1    # CPUs per task
-#SBATCH --mem-per-cpu=8G     # Memory needed per core
-#SBATCH --mail-type=NONE      # Mail when the job ends
+#SBATCH -c     
+#SBATCH --mem 8G   
+
+module load sratoolkit/2.9.0
 
 # for every SRR in the list of SRRs file
 for srr in $(cat SRR_Acc_List_GSE51443.txt)
@@ -155,84 +158,12 @@ In this way (by calling a script within a script) we will start a new job for ea
 The following will **run the main (second) script** on Odyssey:
 
 ```bash
+# DO NOT RUN
 $ sbatch sra_fqdump.slurm
 ```
 
 > **NOTE: SRRs from Multiple Studies:**
 > Sometimes, in a publication, the relevant samples under study are given as sample numbers (GSM numbers), not SRRs, and sometimes belong to different GEO datasets (eg: different parts of a series, or separate studies for case and control experiments/data). If this is the case, download the RunInfoTables for each of the relevant studies as shown, selecting only the relevant GSMs/SRRs in the table before download, and copy them into one file. The starting point for the parallel fastq dump is a list of SRRs - so it does not matter if they came from different studies.
-
-***
-
-#### Downloading from SRA on O2 (HMS-RC cluster)
-
-The following set of commands will perform the same analysis on O2:
-```
-$ scp /path/on/your/computer/to/list_of_SRRs.txt USERNAME@hms.harvard.edu:/n/scratch2/USERNAME/
-```
-
-```bash
-# Create config file by navigating to your scratch space (replace 'username' with your username) and running the following:
-cd /n/scratch2/username
-
-# make a directory for ncbi configuration settings
-mkdir -p ~/.ncbi
-# write configuration file with a line that redirects the cache
-echo '/repository/user/main/public/root = "/n/scratch2/USERNAME/sra-cache"' > ~/.ncbi/user-settings.mkfg
-```
-
-```bash
-$ module load sratoolkit/2.8.1
-$ fastq-dump <SRR>
-```
-
-```bash
-$ vim inner_script.slurm
-```
-
-```bash
-#!/bin/bash
-#SBATCH -t 0-10:00       # Runtime - asking for 10 hours
-#SBATCH -p short            # Partition (queue) - asking for short queue
-#SBATCH -J sra_download             # Job name
-#SBATCH -o run.o             # Standard out
-#SBATCH -e run.e             # Standard error
-#SBATCH --cpus-per-task=1    # CPUs per task
-#SBATCH --mem-per-cpu=8G     # Memory needed per core
-#SBATCH --mail-type=NONE      # Mail when the job ends
-
-module load sratoolkit/2.8.1
-
-# for single end reads only
-fastq-dump $1
-
-# for paired end reads only
-# fastq-dump --split-3  $1
-```
-
-```bash
-$ vim sra_fqdump.slurm
-```
-
-```bash
-#!/bin/bash
-#SBATCH -t 0-10:00       # Runtime
-#SBATCH -p short            # Partition (queue)
-#SBATCH -J your_job_name             # Job name
-#SBATCH -o run.o             # Standard out
-#SBATCH -e run.e             # Standard error
-#SBATCH --cpus-per-task=1    # CPUs per task
-#SBATCH --mem-per-cpu=8G     # Memory needed per core
-#SBATCH --mail-type=NONE      # Mail when the job ends
-
-module load sratoolkit/2.8.1
-
-# for each SRR in the list of SRRs file
-for srr in $(cat list_of_SRRs.txt)
-do
-# call the bash script that does the fastq dump, passing it the SRR number next in file
-sbatch inner_script.slurm $srr
-done
-```
 
 ---
 *This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*

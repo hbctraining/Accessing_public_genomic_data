@@ -25,10 +25,10 @@ Genome databases incorporate these genomes and generate the gene annotations wit
 
 - **Ensembl, NCBI, and UCSC** all use the **same genome assemblies or builds** provided by the GRC
 	- GRCh38 = hg38; GRCh37 = hg19
-	- Patches or minor revisions of the genome, which don't change the genome coordinates, are frequently provided by the GRC. Each database makes the patches available for users at different intervals. When the patches are applied, the genome reference sequence may be differ between databases.
+	- Patches or minor revisions of the genome, which don't change the genome coordinates, are frequently provided by the GRC. Each database makes the patches available for users at different intervals. If the user applies the patches, the genome reference sequence may differ between databases.
 		- GRCh38p1 != GRCh38p2
 
-- Each biological database **independently determines the gene annotations**; therefore, gene annotations between these databases can differ, even though the genome assembly is more or less the same. Naming conventions are also different (chr1=1) between databases.
+- Each biological database **independently determines the gene annotations**; therefore, gene annotations between these databases can differ, even though the genome assembly is the same. Naming conventions are also different (chr1=1) between databases.
 
 - **Always use the same biological database for all reference data!**
 
@@ -92,13 +92,13 @@ For non-human species a suffix is added:
 The interface for downloading reference data from Ensembl is straight-forward. On the home page, you can click on `Downloads`.
 
 <p align="center">
-<img src="../img/ensembl_download_tab.png" width="400">
+<img src="../img/ensembl_download_tab.png" width="500">
 </p>
 
 Then click on the section to `Download a sequence or region`.
 
 <p align="center">
-<img src="../img/ensembl_download_data.png" width="200">
+<img src="../img/ensembl_download_data.png" width="250">
 </p>
 
 
@@ -111,7 +111,7 @@ In the 'Export Data' window, click on the link for the `FTP site`.
 Finally, right-click on the link to the reference genome (DNA FASTA), reference transcriptome (cDNA FASTA), gene annotation file (Gene sets, GTF or GFF), or other required reference data to download. Copy the link address.
 
 <p align="center">
-<img src="../img/ensembl_ftp.png" width="500">
+<img src="../img/ensembl_ftp.png" width="700">
 </p>
 
 
@@ -127,9 +127,9 @@ This would take a really long time for large genomes, so instead, you would prob
 ```bash
 #!/bin/bash
 
-#SBATCH -p shared 	# partition name (small partition on O2)
+#SBATCH -p short 	# partition name (small partition on O2)
 #SBATCH -t 0-6:00 	# hours:minutes runlimit after which job will be killed
-#SBATCH -n 1 		# number of cores requested 
+#SBATCH -c 1 		# number of cores requested 
 #SBATCH -o %J.out	# File to which standard out will be written
 #SBATCH -e %J.err 	# File to which standard err will be written
 
@@ -182,12 +182,12 @@ If desired you could just run the `tar` command after the `wget` command in the 
 
 Downloading the reference data from biological database or iGenomes might not be necessary since the Harvard Odyssey and O2 clusters have **shared reference data** downloaded from iGenomes available to its users. 
 
-The Odyssey shared data is located at `/n/regal/informatics_public/ref/igenome/` and the O2 folder is located at `/n/groups/shared_databases/igenome/`. Instead of using storage space inside your folder, give the path to the reference data in these shared databases instead.
+The Odyssey shared data is located at `/n/groups/shared_databases/igenome/`. Instead of using storage space inside your folder, give the path to the reference data in these shared databases instead.
 
 Let's explore what's available within the `igenome` folder and how to find the reference sequence and gene annotation files.
 
 ```bash
-$ cd /n/regal/informatics_public/ref/igenome/
+$ cd /n/groups/shared_databases/igenome/
 ```
 
 ## Organism-specific databases
@@ -209,13 +209,13 @@ On the homepage, there is direct access to WormBase, links to all species genome
 Downloading reference data from WormBase ParaSite is intuitive and simple. All that is needed is to click on the `Downloads` tab.
 
 <p align="center">
-<img src="../img/wormbase_homepage_download.png" width="300">
+<img src="../img/wormbase_homepage_download.png" width="400">
 </p>
 
 This will take you to the FTP site, where you can right-click to copy the link address of the reference data of interest.
 
 <p align="center">
-<img src="../img/wormbase_downloads.png" width="500">
+<img src="../img/wormbase_downloads.png" width="700">
 </p>
 
 Then, similar to the other methods, the `wget` command can be used to download to the cluster.
@@ -223,9 +223,9 @@ Then, similar to the other methods, the `wget` command can be used to download t
 ```bash
 #!/bin/bash
 
-#SBATCH -p shared 	# partition name (small partition on O2)
+#SBATCH -p short 	# partition name (small partition on O2)
 #SBATCH -t 0-6:00 	# hours:minutes runlimit after which job will be killed
-#SBATCH -n 1 		# number of cores requested 
+#SBATCH -c 1 		# number of cores requested 
 #SBATCH -o %J.out	# File to which standard out will be written
 #SBATCH -e %J.err 	# File to which standard err will be written
 
