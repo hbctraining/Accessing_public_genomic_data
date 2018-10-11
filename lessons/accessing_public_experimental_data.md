@@ -126,11 +126,11 @@ To download the data associated with the paper, "MOV10 and FMRP Regulate AGO2 As
 	$ wget --recursive --no-parent -nd ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE50nnn/GSE50499/suppl/
 	```
 
-	If you would prefer not to download the automatically generated `index.html` file, then another useful flag would be `-R`/`--reject`.
-
-	```bash
-	$ wget -r -np -nd -R "index.html*" ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE50nnn/GSE50499/suppl/
-	```
+> **NOTE:** Sometimes the `wget` will result in an extra file called `index.html` to be downloaded as well. If you would prefer not to download the automatically generated `index.html` file, then another useful flag would be `-R`/`--reject`.
+> 
+>	```bash
+>	$ wget -r -np -nd -R "index.html*" ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE50nnn/GSE50499/suppl/
+>	```
 
 ***
 
