@@ -25,9 +25,9 @@ For many types of sequencing analyses, we need access to public data stored in v
 
 | Lessons            | Estimated Duration |
 |:------------------------|:----------|
-|[Accessing publically available NGS experimental data from Gene Expression Omnibus (GEO)](https://hbctraining.github.io/Training-modules/Accessing_public_genomic_data/lessons/accessing_public_experimental_data.html)| 45 min |
-|[Accessing publically available NGS experimental data from the Sequence Read Archive (SRA)](https://hbctraining.github.io/Training-modules/Accessing_public_genomic_data/lessons/downloading_from_SRA.html)| 60 min |
-|[Accessing genome reference data](https://hbctraining.github.io/Training-modules/Accessing_public_genomic_data/lessons/accessing_genome_reference_data.html) | 60 min |
+|[Accessing publically available NGS experimental data from Gene Expression Omnibus (GEO)](lessons/accessing_public_experimental_data.md)| 45 min |
+|[Accessing publically available NGS experimental data from the Sequence Read Archive (SRA)](lessons/downloading_from_SRA.md)| 60 min |
+|[Accessing genome reference data](lessons/accessing_genome_reference_data.md) | 60 min |
 
 ### Installation Requirements
 
