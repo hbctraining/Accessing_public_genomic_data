@@ -1,8 +1,9 @@
 ## Accessing genomic reference and experimental sequencing data
 
-| Audience | Computational Skills | Prerequisites | Duration |
-:----------|:----------|:----------|:----------|
-| Biologists | Beginner bash | Introduction to the command-line interface | 3 hour workshop (~3 hours of trainer-led time)|
+
+| Audience | Computational skills required | Duration |
+:----------|:---------------|:----------|
+| Biologists | [Beginner bash](https://hbctraining.github.io/Intro-to-Shell/) | 3 hour workshop (~3 hours of trainer-led time)|
 
 
 ### Description
@@ -20,14 +21,12 @@ For many types of sequencing analyses, we need access to public data stored in v
 
 > These materials are developed for a trainer-led workshop, but also amenable to self-guided learning.
 
+### Lessons
+**[Click here](https://hbctraining.github.io/Accessing_public_genomic_data/schedule/) for links to lessons and the suggested schedule**
 
-### Contents
+### Dataset
 
-| Lessons            | Estimated Duration |
-|:------------------------|:----------|
-|[Accessing publically available NGS experimental data from Gene Expression Omnibus (GEO)](lessons/accessing_public_experimental_data.md)| 45 min |
-|[Accessing publically available NGS experimental data from the Sequence Read Archive (SRA)](lessons/downloading_from_SRA.md)| 60 min |
-|[Accessing genome reference data](lessons/accessing_genome_reference_data.md) | 60 min |
+We will be demonstrating how to access the data in the lessons.
 
 ### Installation Requirements
 
@@ -37,4 +36,6 @@ No installation requirements.
 ***Windows users:***
 [GitBash](https://git-scm.com/download/win)
 
+***
+*These materials have been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
 
