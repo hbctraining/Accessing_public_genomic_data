@@ -22,8 +22,8 @@ For many types of sequencing analyses, we need access to public data stored in v
 > These materials are developed for a trainer-led workshop, but also amenable to self-guided learning.
 
 ### Lessons
-- **[Click here](https://hbctraining.github.io/Accessing_public_genomic_data/schedule/schedule_o2.html) for links to lessons and the suggested schedule using the _[HMS-RC](https://rc.hms.harvard.edu) O2 cluster_**
-- **[Click here](https://hbctraining.github.io/Accessing_public_genomic_data/schedule/schedule_odyssey.html) for links to lessons and the suggested schedule using the _[FAS-RC](https://www.rc.fas.harvard.edu) Odyssey cluster_**
+- **[Click here](https://hbctraining.github.io/Accessing_public_genomic_data/schedules/schedule_o2.html) for links to lessons and the suggested schedule using the _[HMS-RC](https://rc.hms.harvard.edu) O2 cluster_**
+- **[Click here](https://hbctraining.github.io/Accessing_public_genomic_data/schedules/schedule_odyssey.html) for links to lessons and the suggested schedule using the _[FAS-RC](https://www.rc.fas.harvard.edu) Odyssey cluster_**
 
 ### Dataset
 
