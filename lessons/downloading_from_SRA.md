@@ -52,11 +52,11 @@ Also on this page is a listing of each run and the corresponding sample it came 
 **Copy the contents of this downloaded file to a new file on the cluster** using the following commands:
 
 ```bash
-$ cd /n/scratch2/username/mov10_rnaseq_project/
+$ cd /n/scratch2/$USER/mov10_rnaseq_project/
 
-$ mkdir -p data/GSE51443    # make a new directory/
+$ mkdir -p mov10_rnaseq_project/data/GSE51443    # make a new set of directories
 
-$ cd data/GSE51443   # change to that directory
+$ cd mov10_rnaseq_project/data/GSE51443   # change to that directory
 
 $ vim SRR_Acc_List_GSE51443.txt   # paste into this new file and save
 ```
