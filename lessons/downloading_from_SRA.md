@@ -52,7 +52,7 @@ Also on this page is a listing of each run and the corresponding sample it came 
 **Copy the contents of this downloaded file to a new file on the cluster** using the following commands:
 
 ```bash
-$ cd /n/scratch2/$USER/mov10_rnaseq_project/
+$ cd /n/scratch2/$USER/
 
 $ mkdir -p mov10_rnaseq_project/data/GSE51443    # make a new set of directories
 
