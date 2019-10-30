@@ -108,7 +108,7 @@ $ vim inner_script.slurm
 #SBATCH -J sra_download             # Job name
 #SBATCH -o run.o             # Standard out
 #SBATCH -e run.e             # Standard error
-#SBATCH -c     
+#SBATCH -c 1   
 #SBATCH --mem 8G     # Memory needed per core
 
 module load sratoolkit/2.9.0
@@ -140,7 +140,7 @@ $ vim sra_fqdump.slurm
 #SBATCH -J sra_download             # Job name
 #SBATCH -o run.o             # Standard out
 #SBATCH -e run.e             # Standard error
-#SBATCH -c     
+#SBATCH -c 1    
 #SBATCH --mem 8G   
 
 module load sratoolkit/2.9.0
