@@ -63,7 +63,7 @@ $ vim SRR_Acc_List_GSE51443.txt   # paste into this new file and save
 
 > **NOTE:** Instead of copying and pasting you can also use `scp` to copy over the downloaded file to the cluster.
 > ```
-> $ scp /path/on/your/computer/to/SRR_Acc_List_GSE51443.txt username@hms.harvard.edu:/n/scratch2/$USER/
+> $ scp /path/on/your/computer/to/SRR_Acc_List_GSE51443.txt username@hms.harvard.edu:/n/scratch3/$USER/
 > ```
 During download, in addition to writing the fastq files, SRA-toolkit writes additional cache files, which are automatically directed to your home directory by default, even if you are working elsewhere. Because of this, we need to write a **short configuration file** to tell SRA-toolkit to **write its cache files to the scratch space**, instead of our home, to avoid running out of storage.
 
