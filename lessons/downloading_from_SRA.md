@@ -52,7 +52,7 @@ Also on this page is a listing of each run and the corresponding sample it came 
 **Copy the contents of this downloaded file to a new file on the cluster** using the following commands:
 
 ```bash
-$ cd /n/scratch2/$USER/
+$ cd /n/scratch3/$USER/
 
 $ mkdir -p mov10_rnaseq_project/data/GSE51443    # make a new set of directories
 
@@ -69,13 +69,13 @@ During download, in addition to writing the fastq files, SRA-toolkit writes addi
 
 ```bash
 # navigate to your scratch space
-cd /n/scratch2/$USER/
+cd /n/scratch3/$USER/
 
 # make a directory for ncbi configuration settings
 mkdir -p ~/.ncbi
 
 # write configuration file with a line that redirects the cache
-echo '/repository/user/main/public/root = "/n/scratch2/$USER/sra-cache"' > ~/.ncbi/user-settings.mkfg
+echo '/repository/user/main/public/root = "/n/scratch3/$USER/sra-cache"' > ~/.ncbi/user-settings.mkfg
 ```
 
 Now we have what we need to run a `fastq-dump` for **all of the SRRs** we want.
@@ -127,39 +127,31 @@ fastq-dump $1
 >
 > Furthermore, there is a **helpful improvement** for this option called `--split-3`, which splits your SRR into 3 files: one for read 1, one for read 2, and one for any orphan reads (ie: reads that aren't present in both files). This is important for downstream analysis, as some aligners require your paired reads to be in sync (ie: present in each file at the same line number) and orphan reads can throw this order off.
 
-The **second script loops through our list of SRRs**, and calls the first script from within the loop, passing it the next SRR in the list.
+The **second script is a shell script** and loops through our list of SRRs. Inside the loop it calls the first script, passing it the next SRR in the list.
 
 ```bash
-$ vim sra_fqdump.slurm
+$ vim sra_fqdump.sh
 ```
 
 ```bash
 #!/bin/bash
-#SBATCH -t 0-10:00       # Runtime - asking for 10 hours
-#SBATCH -p short            # Partition (queue) - asking for short queue
-#SBATCH -J sra_download             # Job name
-#SBATCH -o run.o             # Standard out
-#SBATCH -e run.e             # Standard error
-#SBATCH -c 1    
-#SBATCH --mem 8G   
-
-module load sratoolkit/2.9.0
 
 # for every SRR in the list of SRRs file
 for srr in $(cat SRR_Acc_List_GSE51443.txt)
-do
-# call the bash script that does the fastq dump, passing it the SRR number next in file
-sbatch inner_script.slurm $srr
+  do
+  # call the bash script that does the fastq dump, passing it the SRR number next in file
+  sbatch inner_script.slurm $srr
+  sleep 1	# wait 1 second between each job submission
 done
 ```
 
-In this way (by calling a script within a script) we will start a new job for each SRR download, and download all the files at once **in parallel** -- much quicker than if we had to wait for each one to run sequentially. 
+In this way we will start a new job for each SRR download, and download all the files at once **in parallel** -- much quicker than if we had to wait for each one to run sequentially. 
 
-The following will **run the main (second) script** on Odyssey:
+To run the second script we use:
 
 ```bash
 # DO NOT RUN
-$ sbatch sra_fqdump.slurm
+$ sh sra_fqdump.sh
 ```
 
 > **NOTE: SRRs from Multiple Studies:**
