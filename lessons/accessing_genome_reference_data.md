@@ -9,7 +9,7 @@ To download reference data, there are a few different sources available:
 - **General biological databases:** Ensembl, NCBI, and UCSC
 - **Organism-specific biological databases:** Wormbase, Flybase, etc. (often updated more frequently, so may be more comprehensive)
 - **Reference data collections:** Illumina's iGenomes, one location to access genome reference data from **Ensembl, UCSC and NCBI**
-- **Local access:** shared databases on FAS Odyssey cluster or HMS O2 cluster with access to genome reference data from **Ensembl, UCSC and NCBI**
+- **Local access:** shared databases on the FAS-RC cluster or HMS-RC's O2 cluster with access to genome reference data from **Ensembl, UCSC and NCBI**
 
 *Note that these reference data sources are relevant to most types of genomic analyses, not just NGS analyses.
 
@@ -115,7 +115,7 @@ Finally, right-click on the link to the reference genome (DNA FASTA), reference 
 </p>
 
 
-Now, on an HPC environment (O2 or Odyssey) you could use the `wget` command to download the reference data:
+Now, on an HPC environment (O2 or FAS-RC cluster) you could use the `wget` command to download the reference data:
 
 ```bash
 ## DO NOT RUN
@@ -178,11 +178,11 @@ $ tar -xzf Homo_sapiens_NCBI_GRCh38.tar.gz
 
 If desired you could just run the `tar` command after the `wget` command in the above script to automatically unpack the reference data. 
 
-## Local access via Odyssey or O2
+## Local access via FAS-RC cluster or O2
 
-Downloading the reference data from biological database or iGenomes might not be necessary since the Harvard Odyssey and O2 clusters have **shared reference data** downloaded from iGenomes available to its users. 
+Downloading the reference data from biological database or iGenomes might not be necessary since the Harvard FAS-RC cluster and O2 clusters have **shared reference data** downloaded from iGenomes available to its users. 
 
-The Odyssey shared data is located at `/n/groups/shared_databases/igenome/`. Instead of using storage space inside your folder, give the path to the reference data in these shared databases instead.
+The FAS-RC cluster shared data is located at `/n/groups/shared_databases/igenome/`. Instead of using storage space inside your folder, give the path to the reference data in these shared databases instead.
 
 Let's explore what's available within the `igenome` folder and how to find the reference sequence and gene annotation files.
 
