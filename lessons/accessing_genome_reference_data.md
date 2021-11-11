@@ -182,7 +182,7 @@ If desired you could just run the `tar` command after the `wget` command in the 
 
 Downloading the reference data from biological database or iGenomes might not be necessary since the Harvard FAS-RC cluster and O2 clusters have **shared reference data** downloaded from iGenomes available to its users. 
 
-The FAS-RC cluster shared data is located at `/n/groups/shared_databases/igenome/`. Instead of using storage space inside your folder, give the path to the reference data in these shared databases instead.
+On O2 shared data is located at `/n/groups/shared_databases/igenome/`. Instead of using storage space inside your folder, give the path to the reference data in these shared databases instead.
 
 Let's explore what's available within the `igenome` folder and how to find the reference sequence and gene annotation files.
 
