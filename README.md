@@ -3,7 +3,7 @@
 
 | Audience | Computational skills required | Duration |
 :----------|:---------------|:----------|
-| Biologists | [Beginner bash](https://hbctraining.github.io/Intro-to-Shell/) | 3 hour workshop (~3 hours of trainer-led time)|
+| Biologists | [Shell for Bioinformatics](https://hbctraining.github.io/Shell-for-bioinformatics/) | 3 hour workshop (~3 hours of trainer-led time)|
 
 
 ### Description
